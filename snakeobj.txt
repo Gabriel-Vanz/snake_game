@@ -1,0 +1,7 @@
+Snake 
+Maça = letras
+feito input pelo professor ou responsável
+
+quando cobra passa por cima da letra = pega a letra e mostra na tela
+
+objetivo é completar a palavra pegando as letras corretas
