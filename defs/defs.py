@@ -1,0 +1,1 @@
+pygame.image.load("assets/Letra-A-PNG-1-1024x1024.png")

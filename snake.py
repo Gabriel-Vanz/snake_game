@@ -1,7 +1,7 @@
 import pygame, random
 from pygame.locals import *
 
-
+#movimentação cobra
 def movimento():  
     if direcao == UP:
         cobra[0] = (cobra[0][0], cobra[0][1] - 10)
@@ -14,18 +14,22 @@ def movimento():
 
 pygame.init()
 
-widght = 500
-height = 500
+#tela
+widght = 800
+height = 600
 tela = pygame.display.set_mode((widght,height))
 icone = pygame.image.load("assets/snake_icon_game.png")
 pygame.display.set_caption('Snake Palavras')
 pygame.display.set_icon(icone)
+
+
+
 fps = pygame.time.Clock()
 
 
 #cobra
 cobra = [(200,200), (210,200), (220,200)]
-cobra_corpo = pygame.Surface((10,10))
+cobra_corpo = pygame.Surface((20,20))
 cobra_corpo.fill((0,0,0))
 UP = 0
 RIGHT = 1
@@ -33,10 +37,11 @@ DOWN = 2
 LEFT = 3
 
 direcao = LEFT
-#letras
-letras = pygame.image.load("assets/Letra-A-PNG-1-1024x1024.png")
-tamanho_letras = pygame.transform.scale(letras, (10,10))
-letras_pos = (random.randint(0,490), random.randint(0,490))
+
+#Livros
+livro = pygame.image.load("assets/livro-maca.png")
+tamanho_livro = pygame.transform.scale(livro, (20,20))
+livro_pos = (random.randint(0,490), random.randint(0,490))
 
 while True:
     fps.tick(20)
@@ -44,16 +49,19 @@ while True:
         if event.type == QUIT:
             pygame.quit()
         if event.type == KEYDOWN:
-            if event.key == K_UP:
+            if event.key == K_UP and direcao != DOWN:
                 direcao = UP
-            if event.key == K_DOWN:
+            if event.key == K_DOWN and direcao != UP:
                 direcao = DOWN
-            if event.key == K_RIGHT:
+            if event.key == K_RIGHT and direcao != LEFT:
                 direcao = RIGHT
-            if event.key == K_LEFT:
+            if event.key == K_LEFT and direcao != RIGHT:
                 direcao = LEFT
     movimento()
-
+    for i in range( 1 , len(cobra) - 1 ):
+        if cobra[ 0 ][ 0 ] == cobra[i][ 0 ] and cobra[ 0 ][ 1 ] == cobra[i][ 1 ]:
+            pygame.quit()
+            exit()
 
     
 
@@ -63,7 +71,7 @@ while True:
     
 
     tela.fill((255,255,255))
-    tela.blit(tamanho_letras, letras_pos)
+    tela.blit(tamanho_livro, livro_pos)
     for pos in cobra:
         tela.blit(cobra_corpo, pos)
         
