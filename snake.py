@@ -12,6 +12,21 @@ def movimento():
     if direcao == RIGHT:
         cobra[0] = (cobra[0][0] + 10, cobra[0][1])
 
+def aleatorio():
+    x = random.randint(0,79)
+    y = random.randint(0,59)
+    return (x * 10, y * 10)
+
+
+
+def colisao(c1, c2):
+    return (c1[0] == c2[0]) and (c1[1] == c2[1])
+
+UP = 0
+RIGHT = 1
+DOWN = 2
+LEFT = 3
+
 pygame.init()
 
 #tela
@@ -21,30 +36,34 @@ tela = pygame.display.set_mode((widght,height))
 icone = pygame.image.load("assets/snake_icon_game.png")
 pygame.display.set_caption('Snake Palavras')
 pygame.display.set_icon(icone)
-
-
-
 fps = pygame.time.Clock()
+font = pygame.font.Font('freesansbold.ttf', 18)
 
 
 #cobra
 cobra = [(200,200), (210,200), (220,200)]
-cobra_corpo = pygame.Surface((20,20))
-cobra_corpo.fill((0,0,0))
-UP = 0
-RIGHT = 1
-DOWN = 2
-LEFT = 3
+cobra_corpo = pygame.Surface((10,10))
+cobra_corpo.fill((0,255,0))
+cobra_cabeca = pygame.Surface((cobra [0]))
+cobra_cabeca.fill((0,191,0))
 
 direcao = LEFT
 
 #Livros
 livro = pygame.image.load("assets/livro-maca.png")
-tamanho_livro = pygame.transform.scale(livro, (20,20))
-livro_pos = (random.randint(0,490), random.randint(0,490))
+tamanho_livro = pygame.transform.scale(livro, (10,10))
+livro_pos = aleatorio()
+
+#Bombas
+bomba = pygame.image.load("assets/bomba.png")
+tamanho_bomba = pygame.transform.scale(bomba, (10,10))
+bomba_pos = aleatorio()
+
+pontuacao = 0 
+pontuacao_imagem = pygame.image.load("assets/livro-maca.png")
 
 while True:
-    fps.tick(20)
+    fps.tick(15)
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
@@ -57,23 +76,47 @@ while True:
                 direcao = RIGHT
             if event.key == K_LEFT and direcao != RIGHT:
                 direcao = LEFT
+    
     movimento()
+    
+    if colisao(cobra[0], livro_pos):
+        livro_pos = aleatorio()
+        cobra.append((0,0))
+        pontuacao = pontuacao + 1
+        bomba_pos = aleatorio()
+        if pontuacao >= 10:
+            livro_pos = aleatorio()
+            bomba_pos
+        #preciso que, quando forem 10 pontos, gerar +1 bomba por ponto
+          
+    
+    
+    #fins de jogo
+    if colisao(cobra[0], bomba_pos):
+        break
+    #chega na borda
+    if cobra[0][0] == 800 or cobra[0][1] == 800 or cobra[0][0] < 0 or cobra[0][1] < 0:
+        break
+
+    #encosta em si mesma
     for i in range( 1 , len(cobra) - 1 ):
         if cobra[ 0 ][ 0 ] == cobra[i][ 0 ] and cobra[ 0 ][ 1 ] == cobra[i][ 1 ]:
             pygame.quit()
             exit()
 
-    
-
-
     for i in range(len(cobra) -1, 0 , -1):
         cobra[i] = (cobra[i - 1][0], cobra[i - 1][1])
     
 
-    tela.fill((255,255,255))
+
+    tela.fill((0,0,0))
     tela.blit(tamanho_livro, livro_pos)
+    tela.blit(tamanho_bomba, bomba_pos)
+    #adicionar score com o icone do livro canto superior tela.blit()
     for pos in cobra:
         tela.blit(cobra_corpo, pos)
+    
+
         
         
     pygame.display.update()

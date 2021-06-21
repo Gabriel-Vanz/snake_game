@@ -1,7 +1,5 @@
 Snake 
-Maça = letras
-feito input pelo professor ou responsável
+Maça = livros
+bombas = game over
 
-quando cobra passa por cima da letra = pega a letra e mostra na tela
-
-objetivo é completar a palavra pegando as letras corretas
+objetivo é pontuar com os livros, evitando as bombas, cada 10 pontos, aumenta a quantidade de bombas também em 1
