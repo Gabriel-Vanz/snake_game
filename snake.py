@@ -1,5 +1,6 @@
 import pygame, random
 from pygame.locals import *
+from defs import letras
 
 #movimentação cobra
 def movimento():  
@@ -22,6 +23,19 @@ def aleatorio():
 def colisao(c1, c2):
     return (c1[0] == c2[0]) and (c1[1] == c2[1])
 
+fontletras = pygame.font.Font('freesansbold.ttf', 10)
+def letras():
+    
+    p = fontletras.render("A", True, (255,255,255))
+    a_pos = aleatorio()
+
+    a = fontletras.render("A", True, (255,255,255))
+    a_pos = aleatorio()
+    
+    i = fontletras.render("I", True, (255,255,255))
+    i_pos = aleatorio()
+
+
 UP = 0
 RIGHT = 1
 DOWN = 2
@@ -37,7 +51,6 @@ icone = pygame.image.load("assets/snake_icon_game.png")
 pygame.display.set_caption('Snake Palavras')
 pygame.display.set_icon(icone)
 fps = pygame.time.Clock()
-font = pygame.font.Font('freesansbold.ttf', 18)
 
 
 #cobra
@@ -50,9 +63,8 @@ cobra_cabeca.fill((0,191,0))
 direcao = LEFT
 
 #Livros
-livro = pygame.image.load("assets/livro-maca.png")
-tamanho_livro = pygame.transform.scale(livro, (10,10))
-livro_pos = aleatorio()
+letras()
+
 
 #Bombas
 bomba = pygame.image.load("assets/bomba.png")
@@ -60,7 +72,7 @@ tamanho_bomba = pygame.transform.scale(bomba, (10,10))
 bomba_pos = aleatorio()
 
 pontuacao = 0 
-pontuacao_imagem = pygame.image.load("assets/livro-maca.png")
+
 
 while True:
     fps.tick(15)
@@ -79,14 +91,12 @@ while True:
     
     movimento()
     
-    if colisao(cobra[0], livro_pos):
-        livro_pos = aleatorio()
+    if colisao(cobra[0], letras_pos):
+        letras_pos = aleatorio()
         cobra.append((0,0))
         pontuacao = pontuacao + 1
         bomba_pos = aleatorio()
-        if pontuacao >= 10:
-            livro_pos = aleatorio()
-            bomba_pos
+
         #preciso que, quando forem 10 pontos, gerar +1 bomba por ponto
           
     
@@ -110,7 +120,7 @@ while True:
 
 
     tela.fill((0,0,0))
-    tela.blit(tamanho_livro, livro_pos)
+    tela.blit(letras, letras_pos)
     tela.blit(tamanho_bomba, bomba_pos)
     #adicionar score com o icone do livro canto superior tela.blit()
     for pos in cobra:
