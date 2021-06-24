@@ -1,5 +1,0 @@
-Snake 
-Maça = livros
-bombas = game over
-
-objetivo é pontuar com os livros, evitando as bombas, cada 10 pontos, aumenta a quantidade de bombas também em 1
