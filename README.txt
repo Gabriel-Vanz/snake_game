@@ -1,5 +1,5 @@
 # Snake
-Jogo educacional trabalho avaliativo do final da disciplina de "Fundamentos da Programação"
+Jogo educacional trabalho avaliativo do final da disciplina de "Fundamentos da Programação" do primeiro semestre
 
 Academico: Gabriel Vanz da Silva
 E-mail: gabriel.vanz.silva@gmail.com
